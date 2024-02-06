@@ -1,10 +1,14 @@
-from drawimage import DrawImage
+from drawimage import DrawImage, ImageDraw
+from PIL import Image, ImageFont
 
+
+def mm_to_pixels(mm):
+    return int(mm / 25.4 * 96)
 def main_page():
     width = int(297.4 / 25.4 * 96)
     height = int(215.9 / 25.4 * 96)
     image = DrawImage(width, height,'white')
-    image.insert_text(0, 0, 'white Box', 'black')
+    # image.insert_text(0, 0, 'white Box', 'black')
     return image
 
 def cheque_page():
@@ -30,32 +34,42 @@ def ac_stemp():
     height = int(25.4 / 25.4 * 96)
     image = DrawImage(width, height, 'white')
     return image
-def date_text():
+
+def date_text(date):
     width = int(40.64 / 25.4 * 96)
     height = int(7 / 25.4 * 96)
     image = DrawImage(width, height, 'white')
-    image.insert_text(0, 0, '0  1  0  1  2  0  2  4', 'black', font_size=18)
+    image.insert_text(0, 0, date, 'black', font_size=18)
     return image
-def payee_text():
+
+
+
+def payee_text(payee):
     width = int(105 / 25.4 * 96)
     height = int(6 / 25.4 * 96)
     image = DrawImage(width, height, 'white')
-    name = '**MULLER & PHIPPS PAKISTAN (PVT) LTD.**'
-    name = '    ' + name
+    name = '    ' + payee
     image.insert_text(0, 0, name, 'black', font_size=18)
     return image
-def amount_figur_text():
+
+def bearer():
+    width = int(16 / 25.4 * 96)
+    height = int(6 / 25.4 * 96)
+    image = DrawImage(width, height, 'white')
+    image.insert_text(0, 0, 'x' * 6, 'black', font_size=16)
+    return image
+
+def amount_figur_text(amount):
     width = int(35 / 25.4 * 96)
     height = int(7 / 25.4 * 96)
     image = DrawImage(width, height, 'white')
-    image.insert_text(0, 0, '=100,000.00/-', 'black', font_size=17)
+    image.insert_text(0, 0, amount, 'black', font_size=17)
     return image
 
-def amount_word_text():
+def amount_word_text(figure):
     width = int(112 / 25.4 * 96)
     height = int(14 / 25.4 * 96)
     image = DrawImage(width, height, 'white')
-    figure = 'ONE HUNDRED TWENTY FIVE THOUSAND TWO HUNDRED TWENTY ONE ONLY'
     if len(figure) > 32:
         fifth_space_index = figure.index(' ', figure.index(' ', figure.index(' ', figure.index(' ', figure.index(' ') + 1) + 1) + 1) + 1)
         figure = figure[:fifth_space_index] + '\n' + figure[fifth_space_index:]
@@ -63,6 +77,19 @@ def amount_word_text():
     image.insert_text(0, 0, figure, 'black', font_size=16)
     return image
 
+def get_stamp_image(image_path, resolution):
+    image = Image.open(image_path)
+    width = mm_to_pixels(resolution[0])
+    height = mm_to_pixels(resolution[1])
+    return image.resize((width, height))
+
+def get_horizontal_image(text='', rotate=0):
+    image = Image.open('horizontal line.png')
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.load_default(70)
+    draw.text((50, 20), text, fill='black', font=font)
+    image = image.rotate(rotate, expand=True)
+    return image
 # page.show()
 # # # Cheque full paper
 # cheque = cheque_page()
@@ -88,21 +115,41 @@ page.image.paste(ac_stemp.get_image(), (128 + 347 + 0, 66 + 222 + 0))
 # page.show()
 
 # date only
-date_text = date_text()
-page.image.paste(date_text.get_image(), (128 + 815 + 0, 66 + 267 + 0))
+date_text = date_text(date='0  1  0  1  2  0  2  4')
+page.image.paste(date_text.get_image(), (128 + 800 + 0, 66 + 255 + 0))
 # page.show('DATE TEXT')
 
 
-payee_text = payee_text()
-page.image.paste(payee_text.get_image(), (128 + 352 + 0, 66 + 318 + 0))
+payee_text = payee_text(payee='**MULLER & PHIPPS PAKISTAN (PVT) LTD.**')
+page.image.paste(payee_text.get_image(), (128 + 335 + 0, 66 + 280 + 0))
 # page.show('PAYEE TEXT')
-# page.save_image('01.png')
+# page.save_image('stamp.png')
 
-amount_figur = amount_figur_text()
-page.image.paste(amount_figur.get_image(), (128 + 830 + 0, 66 + 330 + 0))
+
+amount_figur = amount_figur_text(amount='=100,000.00/-')
+page.image.paste(amount_figur.get_image(), (128 + 800 + 0, 66 + 300 + 0))
 # page.show('AMOUNT FIGURE')
 
-amount_word = amount_word_text()
-page.image.paste(amount_word.get_image(), (128 + 352 + 0, 66 + 340 + 0))
-page.show()
-page.save_image('01.png')
+amount_word = amount_word_text('ONE HUNDRED TWENTY FIVE THOUSAND TWO HUNDRED TWENTY ONE ONLY')
+page.image.paste(amount_word.get_image(), (128 + 335 + 0, 66 + 300 + 0))
+# page.show()
+page.save_image('02.png')
+
+# stamp settinng
+stamp = get_stamp_image('stamp.png',(40,25))
+page.image.paste(stamp, (128 + 800 + 0, 66 + 320 + 0), mask=stamp)
+
+# bearer text setting
+bearer_text = bearer()
+page.image.paste(bearer_text.get_image(), (128 + mm_to_pixels(194) + 0, 66 + 287 + 0))
+
+
+# testing here
+image = Image.open('sign.png')
+image = image.resize((170, 35))
+page.image.paste(image, (128 + 780 + 0, 66 + 360 + 0), mask=image)
+page.show('testing')
+page.save_image('testing.png')
+
+ac_image = get_horizontal_image('A/C PAYEE ONLY', 0)
+ac_image
