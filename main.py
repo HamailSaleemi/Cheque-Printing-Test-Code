@@ -30,7 +30,9 @@ ac_image = {
     'text' : ''
 }
 option = 2  # Assuming the option is 1, 2, 3, or 4
-if option == 1:
+if option == 0:
+    ac_image['text'] = ''
+elif option == 1:
     ac_image['text'] = 'A/C PAYEE ONLY'
 elif option == 2:
     ac_image['text'] = 'CASH ONLY'
