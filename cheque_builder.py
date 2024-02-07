@@ -1,6 +1,13 @@
 from PIL import Image, ImageFont, ImageDraw
 
 from helper import get_image, get_image_with_text
+
+import json
+
+with open('config.json') as f:
+    config = json.load(f)
+
+
 def mm_to_pixels(mm):
     return int(mm / 25.4 * 96)
 def main_page(width=0, height=0, color='white'):
@@ -126,4 +133,4 @@ def get_horizontal_image(text='', rotate=0, width=0, height=0, font_size=70, siz
 
 def get_signature():
     image = Image.open('sign.png')
-    return image.resize((170, 35))
+    return image.resize((config['sign_width'], config['sign_height']))
