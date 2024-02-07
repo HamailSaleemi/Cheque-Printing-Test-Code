@@ -50,7 +50,7 @@ def get_cheque_image(date,payee,amount,bearer_chk,stamp_chk,sign_chk,ac_image_ch
 
     if ac_image_chk['enabled']:
     # horizontal line setting
-        ac_text_image = get_horizontal_image('A/C PAYEE ONLY', 25)
+        ac_text_image = get_horizontal_image(ac_image_chk['text'], 25)
         page.image.paste(ac_text_image, (config['cheque_pos_x'] + 340 + config['ac_text_image_box_pos_x'], config['cheque_pos_y'] + 200 + config['ac_text_image_box_pos_y']), mask=ac_text_image)
         return page
     else:

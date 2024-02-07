@@ -26,6 +26,18 @@ sign = {
     'enabled': True,
 }
 ac_image = {
-    'enabled': False,
+    'enabled': True,
+    'text' : ''
 }
+option = 2  # Assuming the option is 1, 2, 3, or 4
+if option == 1:
+    ac_image['text'] = 'A/C PAYEE ONLY'
+elif option == 2:
+    ac_image['text'] = 'CASH ONLY'
+elif option == 3:
+    ac_image['text'] = 'Clearing only'
+elif option == 4:
+    ac_image['text'] = 'Cash WithDrawal only'
+
+print(ac_image['text'])
 get_cheque_image(date, payee,amount,stamp,bearer,sign,ac_image).show('complete cheque')
