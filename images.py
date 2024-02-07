@@ -8,8 +8,6 @@ def cheque_image():
     return cheque
 
 def payee_header():
-    # cheque_width = int(297 / 25.4 * 96) # 1122
-    # cheque_height = int(210 / 25.4 * 96) # 793
     header = DrawImage(400, 400, 'white', transparent=True)
     # line points
     x1, y1 = 150, 400
