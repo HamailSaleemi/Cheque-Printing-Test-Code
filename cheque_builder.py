@@ -1,5 +1,4 @@
-from drawimage import DrawImage, ImageDraw
-from PIL import Image, ImageFont
+from PIL import Image, ImageFont, ImageDraw
 
 from helper import get_image, get_image_with_text
 def mm_to_pixels(mm):
@@ -26,7 +25,7 @@ def cheque_text_page(width=0, height=0, color='white'):
     '''
     return get_image(mm_to_pixels(171) + width, mm_to_pixels(73.6) + height, color)
 
-def date_text(date= '0  0  0  0  0  0  0  0',width=0, height=0, color='white', font_size= 18):
+def get_date_text(date= '0  0  0  0  0  0  0  0',width=0, height=0, color='white', font_size= 18):
     '''
     This function return the date image to maintain
     the size of date.
