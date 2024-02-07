@@ -38,7 +38,7 @@ def get_cheque_image(date):
 
     # bearer text setting
     bearer_text = bearer(bearer='x' * 6, width=config['bearer_width'], height=config['bearer_height'], color=config['bearer_color'], font_size=config['bearer_font'])
-    page.image.paste(bearer_text.get_image(), (config['cheque_pos_x'] + mm_to_pixels(194) + config['cheque_pos_x'], config['bearer_pos_x'] + 287 + config['bearer_pos_y']))
+    page.image.paste(bearer_text.get_image(), (config['cheque_pos_x'] + mm_to_pixels(194) + config['bearer_pos_x'], config['cheque_pos_y'] + 287 + config['bearer_pos_y']))
 
     # signature setting
     sign = get_signature()
