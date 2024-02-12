@@ -30,16 +30,18 @@ ac_image = {
     'text' : ''
 }
 option = 2  # Assuming the option is 1, 2, 3, or 4
-if option == 0:
-    ac_image['text'] = ''
-elif option == 1:
-    ac_image['text'] = 'A/C PAYEE ONLY'
-elif option == 2:
-    ac_image['text'] = 'CASH ONLY'
-elif option == 3:
-    ac_image['text'] = 'Clearing only'
-elif option == 4:
-    ac_image['text'] = 'Cash WithDrawal only'
+options_map = ['', 'A/C PAYEE ONLY', 'CASH ONLY', 'Clearing only', 'Cash WithDrawal only']
+ac_image['text'] = options_map[option]
+# if option == 0:
+#     ac_image['text'] = ''
+# elif option == 1:
+#     ac_image['text'] = 'A/C PAYEE ONLY'
+# elif option == 2:
+#     ac_image['text'] = 'CASH ONLY'
+# elif option == 3:
+#     ac_image['text'] = 'Clearing only'
+# elif option == 4:
+#     ac_image['text'] = 'Cash WithDrawal only'
 
 print(ac_image['text'])
 get_cheque_image(date, payee,amount,stamp,bearer,sign,ac_image).show('complete cheque')
